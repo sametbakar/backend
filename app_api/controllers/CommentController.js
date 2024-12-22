@@ -80,7 +80,7 @@ const getComment = async function (req, res) {
 const updateComment = async function (req, res) {
     try {
         await Venue.findById(req.params.venueid)
-        .select("commnents")
+        .select("comments")
         .exec()
         .then(function(venue){
             try {
