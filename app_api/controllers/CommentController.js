@@ -80,32 +80,22 @@ const getComment = async function (req, res) {
 const updateComment = async function (req, res) {
     try {
         await Venue.findById(req.params.venueid)
-            .select("comments")
-            .exec()
-            .then(function (venue) {
-                try {
-                    let comment = venue.comments.id(req.params.commentid);
-                    if (!comment) {
-                        return createResponse(res, 404, { status: "Böyle bir yorum yok" });
-                    }
-
-                    // Yorum alanlarını güncelle
-                    if (req.body.text) comment.text = req.body.text;
-                    if (req.body.rating) comment.rating = req.body.rating;
-                    if (req.body.author) comment.author = req.body.author;
-                    comment.date = new Date();
-                    
-                    // Değişiklikleri kaydet
-                    venue.save().then(function () {
-                        updateRating(venue._id, false);
-                        createResponse(res, 200, { status: "Yorum güncellendi", comment: comment });
-                    });
-                } catch (error) {
-                    createResponse(res, 400, error);
-                }
-            });
+        .select("commnets")
+        .exec()
+        .then(function(venue){
+            try {
+                let comment=venue.comments.id(req.params.commentid);
+                comment.set(req.body);
+                venue.save().then(function(){
+                    updateRating(venue._id,false);
+                    createResponse(res,201,comment);
+                });
+            } catch (error) {
+                createResponse(res,400,error);
+            }
+        });
     } catch (error) {
-        createResponse(res, 400, error);
+        createResponse(res,400,error);
     }
 }
 
