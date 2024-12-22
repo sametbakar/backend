@@ -1,9 +1,2 @@
-var express = require('express');
-var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+const express = require("express"); const app = express(); app.get("/", (req, res) => { res.send("Vercel'de Express"); }); const PORT = process.env.PORT || 5000; app.list(PORT, () => { console.log(` Sunucu ${PORT} portunda çalışıyor `); }); 
+module.exports = app;
