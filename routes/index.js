@@ -1,13 +1,9 @@
-const express = require('express');
-const app = express();
-const PORT = 4000;
+var express = require('express');
+var router = express.Router();
 
-app.get('/home', (req, res) => {
-  res.status(200).json('Welcome, your app is working well');
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
-
-module.exports = app;
+module.exports = router;
